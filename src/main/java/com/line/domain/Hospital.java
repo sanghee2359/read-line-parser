@@ -1,7 +1,7 @@
 package com.line.domain;
 
-// HospitalParser로 split한 정보를
-// id, name, address 등등으로 알려주는 클래스구나
+// HospitalParser에서 split한 정보를 id, name, address, ... 으로 정보를 초기화하는 클래스
+// 추가로 \"(따옴표) 를 제거하고 정보만 취한다
 public class Hospital {
     private String id;
     private String address;
@@ -11,12 +11,12 @@ public class Hospital {
     private String name;
     private String subdivision;
 
-    public Hospital(String id, String address, String category,
+    public Hospital(String id, String address, String category, String emergency_room,
                     String name, String subdivision) {
         this.id = id.replaceAll("\"", "");
         this.address = address.replaceAll("\"", "");
         this.category = category.replaceAll("\"", "");
-        this.emergency_room = emergency_room;
+        this.emergency_room = Integer.parseInt(emergency_room.replaceAll("\"", ""));
         this.name = name.replaceAll("\"", "");
         this.subdivision = subdivision.replaceAll("\"", "");
         setDistrict();
@@ -47,4 +47,5 @@ public class Hospital {
     public String getSubdivision() {
         return subdivision;
     }
+
 }

@@ -1,4 +1,5 @@
 package com.line.Parser;
+// 첫번째 filereader : 파일 내용을 string으로 한 줄씩 읽어옴
 
 import java.io.BufferedReader;
 import java.io.FileReader;
