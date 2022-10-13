@@ -13,12 +13,12 @@ public class Hospital {
 
     public Hospital(String id, String address, String category, String emergency_room,
                     String name, String subdivision) {
-        this.id = id.replaceAll("\"", "");
-        this.address = address.replaceAll("\"", "");
-        this.category = category.replaceAll("\"", "");
-        this.emergency_room = Integer.parseInt(emergency_room.replaceAll("\"", ""));
-        this.name = name.replaceAll("\"", "");
-        this.subdivision = subdivision.replaceAll("\"", "");
+        this.id = id;
+        this.address = address;
+        this.category = category;
+        this.emergency_room = Integer.parseInt(emergency_room);
+        this.name = name;
+        this.subdivision = subdivision;
         setDistrict();
     }
 
