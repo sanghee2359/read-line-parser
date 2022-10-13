@@ -1,11 +1,15 @@
 package com.line.domain;
 
 // HospitalParser에서 split한 정보를 id, name, address, ... 으로 정보를 초기화하는 클래스
-// 추가로 \"(따옴표) 를 제거하고 정보만 취한다
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 public class Hospital {
     private String id;
     private String address;
-    private String distinct;
+    private String district;
     private String category;
     private Integer emergency_room; // 제네릭<T>에 들어가기 때문에 Integer
     private String name;
@@ -22,9 +26,9 @@ public class Hospital {
         setDistrict();
     }
 
-    private void setDistrict() {
-        String[] arr = address.split(" ");
-        this.distinct = arr[0]+" "+arr[1];
+    public void setDistrict() {
+        String[] splitted = address.split(" ");
+        district = String.format("%s %s", splitted[0], splitted[1]);
     }
     public String getId() {
         return id;
@@ -32,8 +36,8 @@ public class Hospital {
     public String getAddress() {
         return address;
     }
-    public String getDistinct() {
-        return distinct;
+    public String getDistrict() {
+        return district;
     }
     public String getCategory() {
         return category;
