@@ -25,7 +25,16 @@ public class Hospital {
         this.subdivision = subdivision;
         setDistrict();
     }
-
+    @Override
+    public String toString(){
+        return "(\"" + this.id +
+                "\", \"" + this.address +
+                "\", \"" + this.district +
+                "\", \"" + this.category +
+                "\", \"" + this.emergency_room +
+                "\", \"" + this.name +
+                "\", \"" + this.subdivision + "\")";
+    }
     public void setDistrict() {
         String[] splitted = address.split(" ");
         district = String.format("%s %s", splitted[0], splitted[1]);

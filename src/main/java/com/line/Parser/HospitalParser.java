@@ -10,7 +10,7 @@ public class HospitalParser implements Parser<Hospital>{ // type = Hospital
         String[] splitted = str.split(",");
         String name = splitted[10];
         String subDivision = getSubDivision(name);
-        return new Hospital(splitted[0], splitted[1], splitted[3], splitted[6], name, subDivision);  // hospital 객체 생성
+        return new Hospital(splitted[0], splitted[1], splitted[2], splitted[6], name, subDivision);  // hospital 객체 생성
     }
 
     private String getSubDivision(String name) {

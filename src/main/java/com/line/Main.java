@@ -1,6 +1,7 @@
 package com.line;
 
 import com.line.Parser.HospitalParser;
+import com.line.Writer.HospitalWriter;
 import com.line.domain.Hospital;
 
 import java.io.File;
@@ -12,14 +13,16 @@ public class Main {
     public static void main(String[] args) throws IOException {
         LineReader<Hospital> hospitalLineReader = new LineReader<>(new HospitalParser());
         String filename = "C:\\Users\\wjdtk\\Downloads\\서울시 병의원 위치 정보.csv";
-        hospitalLineReader.readLines(filename);
         List<Hospital> hospitals = hospitalLineReader.readLines(filename);
-        List<String> lines = new ArrayList<>();
+//        List<String> lines = new ArrayList<>();
 
         for(Hospital hospital : hospitals){
             System.out.printf("%s,%s,%s,%s,%d,%s,%s\n",hospital.getId(),hospital.getAddress(), hospital.getDistrict(),hospital.getCategory(),
                     hospital.getEmergency_room(),hospital.getName(),hospital.getSubdivision());
         }
+        String targetName = "seoul_hospital_insert.sql";
+        HospitalWriter writer = new HospitalWriter(targetName);
+        writer.writeSql(hospitals);
     }
 }
 /*
