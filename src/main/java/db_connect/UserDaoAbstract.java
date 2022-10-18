@@ -2,19 +2,13 @@ package db_connect;
 
 import com.line.domain.User;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.Map;
 
 import static java.lang.System.getenv;
 
-public class UserDao {
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
-        Map<String, String> env = getenv();
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection c = DriverManager.getConnection(env.get("DB_HOST"),env.get("DB_USER"),env.get("DB_PASSWORD"));
-        return c;
-    }
+public abstract class UserDaoAbstract {
+    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
     public void add(User user) throws SQLException, ClassNotFoundException{
 
         Connection conn = getConnection();
@@ -44,16 +38,6 @@ public class UserDao {
         conn.close();
 
         return user;
-    }
-
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        UserDao userDao = new UserDao();
-        /* User 추가
-        userDao.add(new User("4", "junghyen", "0308"));
-         */
-        User user = userDao.findById("1");
-        System.out.println(user.getName());
-        System.out.println(user.getPassword());
     }
 
 }
