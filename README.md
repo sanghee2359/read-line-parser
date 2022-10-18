@@ -4,6 +4,7 @@
 - add() - INSERT INTO 쿼리문
 ### User.java
 - id, name, password 등 User 정보를 저장하는 클래스
+![img_2.png](img_2.png)
 <br>
 
 
