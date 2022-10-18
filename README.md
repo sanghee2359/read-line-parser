@@ -1,4 +1,4 @@
-# 병원 정보 제공 앱 만들기
+# 병원 정보 
 - 서울특별시 병의원.csv 파일을 분석 -> File에서 필요한 정보 parsing
   - 병원분류명이 총 몇가지 인지?<br>
   -  병원분류별로 몇개씩 있는지? 
@@ -10,3 +10,11 @@
 <BR>
 
 ![img.png](img.png)
+
+# java와 DB연동(Dao)
+### UserDao.java
+- get() - SELECT FROM 쿼리문
+- add() - INSERT INTO 쿼리문
+
+### User.java
+- id, name, password 등 User 정보를 저장하는 클래스
