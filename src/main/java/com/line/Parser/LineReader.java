@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LineReader {
-    List<String> readLine(String filename) throws IOException {    // default 메소드
+    List<String> readLine(String filename) throws IOException {    // default 메소드 아요 배터리가
         List<String> result = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filename));
         String str;
@@ -25,6 +25,3 @@ public class LineReader {
         System.out.println(line.size());
     }
 }
-/*
-* 19040 개의 병원 정보가 들어갔다.
- */

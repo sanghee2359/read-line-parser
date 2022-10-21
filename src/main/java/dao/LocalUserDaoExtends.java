@@ -1,4 +1,5 @@
-package db_connect;
+package dao;
+// 1. 상속을 이용한 확장(UserDaoAbstract)
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +8,7 @@ import java.util.Map;
 
 import static java.lang.System.getenv;
 
-public class LocalUserDaoImpl extends UserDaoAbstract{
+public class LocalUserDaoExtends extends UserDaoAbstract{
 
     @Override
     public Connection getConnection() throws ClassNotFoundException, SQLException {

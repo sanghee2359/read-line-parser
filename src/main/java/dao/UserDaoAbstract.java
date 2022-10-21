@@ -1,9 +1,8 @@
-package db_connect;
+package dao;
 
 import com.line.domain.User;
 
 import java.sql.*;
-import java.util.Map;
 
 import static java.lang.System.getenv;
 
