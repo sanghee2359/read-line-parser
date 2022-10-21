@@ -18,32 +18,22 @@ public class UserDao {
 
         this.connectionMaker = connectionMaker;
     }
-    public void deleteAll() throws ClassNotFoundException {
+    public void jdbcContextWithStatementStrategy(StatementStrategy stmt) throws SQLException{
         Connection c = null;
         PreparedStatement pstmt = null;
-
         try {
             c = connectionMaker.makeConnection();
-//            pstmt = c.prepareStatement("DELETE FROM user");
             pstmt = new DeleteAllStrategy().makePreparedStatement(c);
-
             pstmt.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         } finally { // error가 나도 실행되는 블록
-            if(pstmt != null) { // pstmt가 null이 아니라면
-                try {
-                    pstmt.close();
-                } catch (SQLException e) {
-                }
-            }
-            if(c != null){
-                try {
-                    c.close();
-                } catch (SQLException e) {
-                }
-            }
+            if(pstmt != null) { try { pstmt.close();} catch (SQLException e) {}}
+            if(c != null){ try {c.close();} catch (SQLException e) {}}
         }
+    }
+    public void deleteAll() throws ClassNotFoundException, SQLException {
+        jdbcContextWithStatementStrategy(new DeleteAllStrategy());
     }
     public int getCount() throws ClassNotFoundException {
         Connection c = null;
@@ -52,8 +42,7 @@ public class UserDao {
 
         try {
             c = connectionMaker.makeConnection();
-//            ps = c.prepareStatement("SELECT count(*) FROM user");
-            ps = new getCountStrategy().makePreparedStatement(c);
+            ps = c.prepareStatement("SELECT count(*) FROM user");
             rs = ps.executeQuery();
             rs.next();
             return rs.getInt(1);
@@ -87,8 +76,7 @@ public class UserDao {
         PreparedStatement ps = null;
         try {
             conn = connectionMaker.makeConnection();
-//            ps = conn.prepareStatement("INSERT INTO user(id, name, password) VALUES(?, ?, ?)");
-            ps = new addStrategy().makePreparedStatement(conn);
+            ps = conn.prepareStatement("INSERT INTO user(id, name, password) VALUES(?, ?, ?)");
             ps.setString(1, user.getId());
             ps.setString(2, user.getName());
             ps.setString(3, user.getPassword());
@@ -112,11 +100,9 @@ public class UserDao {
     }
     public User findById(String id) throws SQLException, ClassNotFoundException{
         // DB접속 (sql workbench실행)
-//        Connection conn = awsConnectionMaker.openConnection();
         Connection conn = connectionMaker.makeConnection();
         // Qurey문 작성
-//        PreparedStatement ps = conn.prepareStatement("SELECT id, name, password FROM user WHERE id=?");
-        PreparedStatement ps = new findByIdStrategy().makePreparedStatement(conn);
+        PreparedStatement ps = conn.prepareStatement("SELECT id, name, password FROM user WHERE id=?");
         ps.setString(1, id);
         // Query문 실행
         ResultSet rs = ps.executeQuery();
