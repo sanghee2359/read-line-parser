@@ -23,7 +23,8 @@ public class UserDao {
         PreparedStatement pstmt = null;
         try {
             c = connectionMaker.makeConnection();
-            pstmt = new DeleteAllStrategy().makePreparedStatement(c);
+//            pstmt = new DeleteAllStrategy().makePreparedStatement(c);
+            pstmt = stmt.makePreparedStatement(c);
             pstmt.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -69,34 +70,11 @@ public class UserDao {
             }
         }
     }
-    public void add(User user) throws ClassNotFoundException{
-
+    public void add(User user) throws ClassNotFoundException, SQLException {
+        AddStrategy addStrategy = new AddStrategy(user);
+        jdbcContextWithStatementStrategy(addStrategy);
         //Connection conn = awsConnectionMaker.openConnection();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = connectionMaker.makeConnection();
-            ps = conn.prepareStatement("INSERT INTO user(id, name, password) VALUES(?, ?, ?)");
-            ps.setString(1, user.getId());
-            ps.setString(2, user.getName());
-            ps.setString(3, user.getPassword());
-            ps.executeUpdate();
-        }catch(SQLException e){
-            throw new RuntimeException(e);
-        } finally {
-            if(ps != null){
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                }
-            }
-            if(conn != null){
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                }
-            }
-        }
+
     }
     public User findById(String id) throws SQLException, ClassNotFoundException{
         // DB접속 (sql workbench실행)
@@ -122,8 +100,8 @@ public class UserDao {
         // 관계설정 책임이 추가된 UserDao 클라이언트
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         UserDao dao = new UserDaoFactory().awsUserDao();
-        String id ="12";
-        dao.add(new User(id, "sanghee", "25345"));
+        String id ="3";
+        dao.add(new User(id, "jiwon", "25345"));
 
         User user = dao.findById(id);
         System.out.println(user.getName());
