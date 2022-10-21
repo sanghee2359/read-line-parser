@@ -24,7 +24,9 @@ public class UserDao {
 
         try {
             c = connectionMaker.makeConnection();
-            pstmt = c.prepareStatement("DELETE FROM user");
+//            pstmt = c.prepareStatement("DELETE FROM user");
+            pstmt = new DeleteAllStrategy().makePreparedStatement(c);
+
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -50,7 +52,8 @@ public class UserDao {
 
         try {
             c = connectionMaker.makeConnection();
-            ps = c.prepareStatement("SELECT count(*) FROM user");
+//            ps = c.prepareStatement("SELECT count(*) FROM user");
+            ps = new getCountStrategy().makePreparedStatement(c);
             rs = ps.executeQuery();
             rs.next();
             return rs.getInt(1);
@@ -84,7 +87,8 @@ public class UserDao {
         PreparedStatement ps = null;
         try {
             conn = connectionMaker.makeConnection();
-            ps = conn.prepareStatement("INSERT INTO user(id, name, password) VALUES(?, ?, ?)");
+//            ps = conn.prepareStatement("INSERT INTO user(id, name, password) VALUES(?, ?, ?)");
+            ps = new addStrategy().makePreparedStatement(conn);
             ps.setString(1, user.getId());
             ps.setString(2, user.getName());
             ps.setString(3, user.getPassword());
@@ -111,7 +115,8 @@ public class UserDao {
 //        Connection conn = awsConnectionMaker.openConnection();
         Connection conn = connectionMaker.makeConnection();
         // Qurey문 작성
-        PreparedStatement ps = conn.prepareStatement("SELECT id, name, password FROM user WHERE id=?");
+//        PreparedStatement ps = conn.prepareStatement("SELECT id, name, password FROM user WHERE id=?");
+        PreparedStatement ps = new findByIdStrategy().makePreparedStatement(conn);
         ps.setString(1, id);
         // Query문 실행
         ResultSet rs = ps.executeQuery();
